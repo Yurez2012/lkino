@@ -13,7 +13,7 @@ class CreateRegistrationUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reg', function (Blueprint $table) {
+        Schema::create('auths', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('law');
@@ -31,6 +31,6 @@ class CreateRegistrationUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reg');
+        Schema::drop('auths');
     }
 }

@@ -11,4 +11,12 @@
 |
 */
 
-Route::get('reg', 'User\RegController@index');
+/*
+ * чому не працює такий роут у папку
+ *
+ * Route::get('reg', 'User\RegController@index');
+ */
+
+Route::get('reg/create', 'RegController@create');
+Route::post('reg', 'RegController@store');
+Route::get('reg/show', 'RegController@show');
