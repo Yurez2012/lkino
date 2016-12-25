@@ -5,14 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUser;
 use App\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class RegController extends Controller
 {
     public function create()
     {
-        return view('auth.reg');
-    }
 
+        $user = Session::get('user');
+        if(!empty($user)) {
+            return redirect('news');
+        }else {
+            return view('auth.reg');
+        }
+
+    }
 
     /**
      * @param CreateUser|Request $request
@@ -22,15 +29,30 @@ class RegController extends Controller
 
     public function store(CreateUser $request)
     {
-        $request = new Auth($request->all());
-        $request['law'] = 'quest';
-        Auth::create($request->getAttributes());
 
-        return redirect('reg/show');
+
+        $user = Session::get('user');
+        if(!empty($user)) {
+            return redirect('news');
+        }else {
+            $request = new Auth($request->all());
+            $request['law'] = 'quest';
+            $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
+            Auth::create($request->getAttributes());
+
+            return redirect('reg/show');
+        }
     }
 
     public function show()
     {
-        return view("auth.show");
+        $user = Session::get('user');
+        if(!empty($user)) {
+            return redirect('news');
+        }else {
+            return view("auth.show");
+        }
+
+
     }
 }

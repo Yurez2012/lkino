@@ -12,4 +12,8 @@ class Auth extends Model
         'law',
         'password'
     ];
+
+
+
+
 }
