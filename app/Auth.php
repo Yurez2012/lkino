@@ -10,7 +10,8 @@ class Auth extends Model
         'name',
         'email',
         'law',
-        'password'
+        'password',
+        'remember_token'
     ];
 
 

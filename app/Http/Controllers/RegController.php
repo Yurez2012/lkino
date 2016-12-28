@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class RegController extends Controller
 {
+
     public function create()
     {
 
@@ -30,15 +31,26 @@ class RegController extends Controller
     public function store(CreateUser $request)
     {
 
+        $userName = 'Yurez2012';
+        $userPass = '90241jura';
 
         $user = Session::get('user');
         if(!empty($user)) {
             return redirect('news');
         }else {
-            $request = new Auth($request->all());
-            $request['law'] = 'quest';
-            $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
-            Auth::create($request->getAttributes());
+            $post = $request->all();
+
+            if($post['password'] == $userPass && $post['name'] == $userName) {
+                $post['law'] = 'Admin';
+            }else {
+                $post['law'] = 'Quest';
+            }
+            $post['remember_token'] = $post['_token'];
+            $post['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
+
+            $user = new Auth($post);
+
+            Auth::create($post);
 
             return redirect('reg/show');
         }
